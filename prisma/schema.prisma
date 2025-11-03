@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+
+model User {
+  id       Int     @id @default(autoincrement())
+  email    String  @unique
+  name     String?
+  mobile   String
+  password String
+}
+
+
+
+
+model Product {
+  id          String    @unique
+  title       String
+  description String?
+  price       String
+  category    String
+  image       String?
+  file_path   String?
+  status      String   @default("active")
+  created_at  DateTime @default(now())
+}
+
+
+
+
+model Order {
+  id          String     @unique 
+  user_id     String
+  amount       String
+  product_id  String
+  payment_id  String?   // Razorpay / UPI / custom payment reference
+  status      String    @default("pending")
+  created_at  DateTime  @default(now())
+}
+
+
+
+
+model Download {
+  id             String   @unique
+  user_id        Int
+  product_id     Int
+  download_time  DateTime @default(now())
+
+}
+
+
