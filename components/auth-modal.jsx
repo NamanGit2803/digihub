@@ -56,23 +56,44 @@ const AuthModal = () => {
     }
 
     if (userStore.user) {
-      toast(
-        <div className="flex gap-2 items-center">
-          <CheckCircle className="text-green-600 w-4 h-4" />
-          <span>
-            {isLogin ? "Logged in successfully!" : "Registered successfully!"}
-          </span>
-        </div>
-      )
+      if (userStore.user.role === 'admin') {
+        setFormData({
+          name: "",
+          email: "",
+          password: "",
+          mobile: "",
+        })
 
-      
-      setFormData({
-        name: "",
-        email: "",
-        password: "",
-        mobile: "",
-      })
-      router.push("/")
+        toast(
+          <div className="flex gap-2 items-center">
+            <CheckCircle className="text-green-600 w-4 h-4" />
+            <span>
+              {"Logged in as admin successfully!"}
+            </span>
+          </div>
+        )
+
+        router.push('/admin')
+
+      } else {
+        toast(
+          <div className="flex gap-2 items-center">
+            <CheckCircle className="text-green-600 w-4 h-4" />
+            <span>
+              {isLogin ? "Logged in successfully!" : "Registered successfully!"}
+            </span>
+          </div>
+        )
+
+
+        setFormData({
+          name: "",
+          email: "",
+          password: "",
+          mobile: "",
+        })
+        router.push("/")
+      }
     } else if (userStore.error) {
       toast(
         <div className="flex gap-2 items-center">
@@ -86,9 +107,9 @@ const AuthModal = () => {
 
   return (
     <Dialog open={userStore.authModelOpen} onOpenChange={(isOpen) => {
-      
+
       isOpen ? userStore.openAuthModal() : userStore.closeAuthModal()
-      
+
       // reset form when dialog closes
       if (!isOpen) {
         setFormData({
@@ -97,14 +118,14 @@ const AuthModal = () => {
           password: "",
           mobile: "",
         })
-        setIsLogin(true) 
+        setIsLogin(true)
       }
     }}>
       <DialogTrigger asChild>
         <Button
           size="sm"
           className="hover:cursor-pointer"
-          onClick={()=>userStore.openAuthModal()}
+          onClick={() => userStore.openAuthModal()}
         >
           Sign In
         </Button>

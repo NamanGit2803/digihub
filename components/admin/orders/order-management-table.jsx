@@ -104,12 +104,10 @@ export function OrderManagementTable({ searchTerm = "", statusFilter = "all" }) 
             <Table>
                 <TableHeader>
                     <TableRow>
-                        <TableHead>Order Number</TableHead>
+                        <TableHead>Order Id</TableHead>
                         <TableHead>Customer</TableHead>
                         <TableHead>Date</TableHead>
-                        <TableHead>Items</TableHead>
                         <TableHead>Total</TableHead>
-                        <TableHead>Status</TableHead>
                         <TableHead>Actions</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -120,13 +118,7 @@ export function OrderManagementTable({ searchTerm = "", statusFilter = "all" }) 
                             <TableCell className="font-medium">{order.orderNumber}</TableCell>
                             <TableCell>{order.customer}</TableCell>
                             <TableCell>{order.date}</TableCell>
-                            <TableCell>{order.items}</TableCell>
                             <TableCell>${order.total.toFixed(2)}</TableCell>
-                            <TableCell>
-                                <Badge className={getStatusColor(order.status)} variant="outline">
-                                    {order.status}
-                                </Badge>
-                            </TableCell>
                             <TableCell>
                                 <div className="flex gap-2">
                                     <Button variant="ghost" size="sm" onClick={() => handleViewOrder(order)}>

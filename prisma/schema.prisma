@@ -21,6 +21,7 @@ model User {
   name     String?
   mobile   String
   password String
+  role     String  @default("user")
 }
 
 

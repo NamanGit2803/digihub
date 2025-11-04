@@ -125,10 +125,11 @@ class UserStore {
     }
 
     //  Logout
-    logout() {
+    async logout() {
         this.user = null
         this.token = null
         localStorage.removeItem("user")
+        await fetch("/api/user/logout", { method: "POST" });
     }
 
     // change user info 

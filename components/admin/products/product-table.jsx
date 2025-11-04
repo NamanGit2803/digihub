@@ -84,11 +84,10 @@ export function ProductTable({ searchTerm = "" }) {
     <Table>
       <TableHeader>
         <TableRow>
+          <TableHead>Product Id</TableHead>
           <TableHead>Product Name</TableHead>
-          <TableHead>SKU</TableHead>
           <TableHead>Category</TableHead>
           <TableHead>Price</TableHead>
-          <TableHead>Stock</TableHead>
           <TableHead>Status</TableHead>
           <TableHead>Actions</TableHead>
         </TableRow>
@@ -96,15 +95,10 @@ export function ProductTable({ searchTerm = "" }) {
       <TableBody>
         {filtered.map((product) => (
           <TableRow key={product.id}>
+            <TableCell>{product.id}</TableCell>
             <TableCell className="font-medium">{product.name}</TableCell>
-            <TableCell>{product.sku}</TableCell>
             <TableCell>{product.category}</TableCell>
             <TableCell>${product.price.toFixed(2)}</TableCell>
-            <TableCell>
-              <Badge variant={product.stock === 0 ? "destructive" : "secondary"}>
-                {product.stock}
-              </Badge>
-            </TableCell>
             <TableCell>
               <Badge className={getStatusColor(product.status)} variant="outline">
                 {product.status}
