@@ -5,8 +5,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Plus, Search } from "lucide-react"
-import { ProductTable } from "@/components/admin/products/product-table"
-import { AddProductDialog } from "@/components/admin/products/add-product-dialog"
+import  ProductTable  from "@/components/admin/products/product-table"
+import  AddProductDialog  from "@/components/admin/products/add-product-dialog"
 
 export default function ProductsPage() {
   const [searchTerm, setSearchTerm] = useState("")
@@ -26,10 +26,7 @@ export default function ProductsPage() {
               <CardTitle>Product Catalog</CardTitle>
               <CardDescription>All products in your inventory</CardDescription>
             </div>
-            <Button onClick={() => setIsDialogOpen(true)} className="w-full md:w-auto">
-              <Plus className="w-4 h-4 mr-2" />
-              Add Product
-            </Button>
+            <AddProductDialog />
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -48,7 +45,7 @@ export default function ProductsPage() {
         </CardContent>
       </Card>
 
-      <AddProductDialog open={isDialogOpen} onOpenChange={setIsDialogOpen} />
+      
     </div>
   )
 }

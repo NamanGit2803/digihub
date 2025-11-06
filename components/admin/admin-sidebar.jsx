@@ -6,8 +6,11 @@ import { LayoutDashboard, Package, ShoppingCart, Users, Settings, LogOut, Menu }
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { useRouter } from "next/navigation"
+import { observer } from "mobx-react-lite"
+import { useStore } from '@/stores/StoreProvider'
 
-export function AdminSidebar({ open, onOpenChange }) {
+const AdminSidebar = ({ open, onOpenChange }) => {
+  const { userStore, manageUsersStore } = useStore()
   const pathname = usePathname()
   const router = useRouter()
 
@@ -19,10 +22,6 @@ export function AdminSidebar({ open, onOpenChange }) {
     { label: "Settings", href: "/admin/settings", icon: Settings },
   ]
 
-  const handleLogout = () => {
-    localStorage.removeItem("user")
-    router.push('/')
-  }
 
   return (
     <>
@@ -66,7 +65,7 @@ export function AdminSidebar({ open, onOpenChange }) {
 
           {/* Logout */}
           <div className="p-4 border-t border-sidebar-border">
-            <Button variant="destructive" className="w-full justify-start" onClick={handleLogout}>
+            <Button variant="destructive" className="w-full justify-start hover:cursor-pointer" onClick={()=> {userStore.logout(), router.push('/')}}>
               <LogOut className="w-4 h-4 mr-2" />
               Logout
             </Button>
@@ -79,3 +78,6 @@ export function AdminSidebar({ open, onOpenChange }) {
     </>
   )
 }
+
+
+export default observer(AdminSidebar)

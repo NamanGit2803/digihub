@@ -2,78 +2,114 @@
 
 import { useState } from "react"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Edit2, Trash2, Shield } from "lucide-react"
+import { Trash2, CheckCircle } from "lucide-react"
+import { observer } from "mobx-react-lite"
+import { useStore } from '@/stores/StoreProvider'
+import { toast } from "sonner"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 
-const mockUsers = [
-  { id: "1", name: "John Doe", email: "john@example.com", mobile: '6350250055', },
-  { id: "2", name: "Jane Smith", email: "jane@example.com", mobile: '6350250054',},
-  { id: "3", name: "Bob Johnson", email: "bob@example.com", mobile: '6350250053',},
-  {
-    id: "4",
-    name: "Alice Williams",
-    email: "alice@example.com",
-    mobile: '6350250058',
-  },
-  {
-    id: "5",
-    name: "Charlie Brown",
-    email: "charlie@example.com",
-    mobile: '6350250056',
-  },
-]
+const UserManagementTable = ({ searchTerm = "" }) => {
+  const { manageUsersStore } = useStore()
+  const [selectedUser, setSelectedUser] = useState(null)
+  const [open, setOpen] = useState(false) // for dialog open/close
 
-export function UserManagementTable({ searchTerm = "", roleFilter = "all" }) {
-  const [users, setUsers] = useState(mockUsers)
-
-  const filtered = users.filter((user) => {
+  const filtered = manageUsersStore.allUsers?.filter((user) => {
     const matchesSearch =
       user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       user.email.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesRole = roleFilter === "all" || user.role === roleFilter
-    return matchesSearch && matchesRole
+
+    return matchesSearch
   })
 
-  const handleDelete = (id) => {
-    setUsers(users.filter((u) => u.id !== id))
-  }
+  // 🗑️ Confirm Delete Handler
+  const confirmDelete = async () => {
+    if (!selectedUser) return
+    await manageUsersStore.deleteUser(selectedUser.email)
 
-  const getRoleIcon = (role) => (role === "admin" ? "Admin" : role.charAt(0).toUpperCase() + role.slice(1))
+    if (!manageUsersStore.error) {
+      toast(
+        <div className="flex gap-2 items-center">
+          <CheckCircle className="text-green-600 w-4 h-4" />
+          <span>User deleted successfully</span>
+        </div>
+      )
+    } else {
+      toast.error(manageUsersStore.error)
+    }
 
-  const getStatusColor = (status) => {
-    return status === "active" ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"
+    setOpen(false)
+    setSelectedUser(null)
   }
 
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Name</TableHead>
-          <TableHead>Email</TableHead>
-          <TableHead>Mobile</TableHead>
-          <TableHead>Actions</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {filtered.map((user) => (
-          <TableRow key={user.id}>
-            <TableCell className="font-medium">{user.name}</TableCell>
-            <TableCell>{user.email}</TableCell>
-            <TableCell>{user.mobile}</TableCell>
-            <TableCell>
-              <div className="flex gap-2">
-                <Button variant="ghost" size="sm">
-                  <Edit2 className="w-4 h-4" />
-                </Button>
-                <Button variant="ghost" size="sm" onClick={() => handleDelete(user.id)}>
-                  <Trash2 className="w-4 h-4" />
-                </Button>
-              </div>
-            </TableCell>
+    <>
+      {/* ✅ Delete Confirmation Dialog */}
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Delete User</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete{" "}
+              <span className="font-medium">{selectedUser?.name}</span>? <br />
+              This action cannot be undone.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="flex justify-end gap-2">
+            <Button variant="outline" onClick={() => setOpen(false)}>
+              Cancel
+            </Button>
+            <Button variant="destructive" className='hover:cursor-pointer' onClick={confirmDelete}>
+              Delete
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* ✅ Table */}
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Name</TableHead>
+            <TableHead>Email</TableHead>
+            <TableHead>Mobile</TableHead>
+            <TableHead>Actions</TableHead>
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        </TableHeader>
+        <TableBody>
+          {filtered.map((user) => (
+            <TableRow key={user.email}>
+              <TableCell className="font-medium">{user.name}</TableCell>
+              <TableCell>{user.email}</TableCell>
+              <TableCell>{user.mobile}</TableCell>
+              <TableCell>
+                <div className="flex gap-2">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="hover:bg-red-600 hover:text-white"
+                    onClick={() => {
+                      setSelectedUser(user)
+                      setOpen(true)
+                    }}
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
+                </div>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </>
   )
 }
+
+export default observer(UserManagementTable)

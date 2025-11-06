@@ -1,16 +1,22 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Plus, Search } from "lucide-react"
-import { UserManagementTable } from "@/components/admin/users/user-management-table"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import  UserManagementTable  from "@/components/admin/users/user-management-table"
+import { observer } from "mobx-react-lite"
+import { useStore } from '@/stores/StoreProvider'
 
-export default function UsersPage() {
+const UsersPage = () => {
+  const { manageUsersStore } = useStore()
   const [searchTerm, setSearchTerm] = useState("")
-  const [roleFilter, setRoleFilter] = useState("all")
+
+  useEffect(() => {
+    manageUsersStore.fetchAllUsers()
+  }, [])
+  
 
   return (
     <div className="space-y-6">
@@ -39,22 +45,13 @@ export default function UsersPage() {
                 className="pl-10"
               />
             </div>
-            <Select value={roleFilter} onValueChange={setRoleFilter}>
-              <SelectTrigger className="w-full md:w-48">
-                <SelectValue placeholder="Filter by role" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Roles</SelectItem>
-                <SelectItem value="admin">Admin</SelectItem>
-                <SelectItem value="manager">Manager</SelectItem>
-                <SelectItem value="user">User</SelectItem>
-              </SelectContent>
-            </Select>
           </div>
-          <UserManagementTable searchTerm={searchTerm} roleFilter={roleFilter} />
+          <UserManagementTable searchTerm={searchTerm}  />
         </CardContent>
       </Card>
 
     </div>
   )
 }
+
+export default observer(UsersPage)

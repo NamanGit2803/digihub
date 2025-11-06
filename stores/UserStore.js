@@ -10,13 +10,15 @@ class UserStore {
     loading = false
     authModelOpen = false
 
+    // admin 
+
+
     constructor() {
         makeAutoObservable(this)
         this.loadFromStorage()
     }
 
     openAuthModal() {
-        console.log('hiii')
         this.authModelOpen = true
     }
 
@@ -85,7 +87,7 @@ class UserStore {
             })
             const data = await res.json()
 
-            if (!res.ok) throw new Error(data.message || "Registration failed")
+            if (!res.ok) throw new Error(data.error || "Registration failed")
 
             runInAction(() => {
                 this.setAuthData(data.user, data.token)

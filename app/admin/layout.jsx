@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { AdminSidebar } from '@/components/admin/admin-sidebar'
+import  AdminSidebar  from '@/components/admin/admin-sidebar'
 import { Header } from "@/components/admin/header"
 
 export default function DashboardLayout({ children }) {
