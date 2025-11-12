@@ -61,7 +61,27 @@ model Download {
   user_id        Int
   product_id     Int
   download_time  DateTime @default(now())
-
 }
+
+model Category {
+  id           String   @unique
+  name         String
+  slug         String
+  image        String
+  createdAt   DateTime @default(now())
+}
+
+
+
+model SiteSetting {
+  id              Int      @id @default(1)
+  siteName        String
+  siteLogoUrl     String
+  heroTitle       String
+  heroSubtitle    String
+  metaDescription String
+  updatedAt       DateTime @updatedAt
+}
+
 
 

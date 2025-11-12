@@ -13,16 +13,16 @@ const ProductCard = ({ product }) => {
   return (
     <div className="bg-card rounded-lg overflow-hidden border border-border hover:shadow-lg transition-shadow">
       {/* Product Image */}
-      <div className="relative h-48 bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center overflow-hidden">
+      <div className="relative h-48 bg-linear-to-br from-primary/20 to-accent/20 flex items-center justify-center overflow-hidden">
         <img
           src={product.image || `/placeholder.svg?height=200&width=300&query=${product.title}`}
           alt={product.title}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-fill"
         />
       </div>
 
       {/* Product Info */}
-      <div className="p-4">
+      <div className="p-4 flex flex-col justify-between">
         <div className="mb-2">
           <span className="inline-block px-2 py-1 bg-secondary text-secondary-foreground text-xs rounded-full">
             {product.category}
@@ -34,7 +34,7 @@ const ProductCard = ({ product }) => {
 
         {/* Price */}
         <div className="mb-4">
-          <span className="text-2xl font-bold text-primary">${product.price}</span>
+          <span className="text-2xl font-bold text-primary">₹{product.price}</span>
         </div>
 
         {/* Actions */}
@@ -46,7 +46,7 @@ const ProductCard = ({ product }) => {
             <Eye className="w-4 h-4" />
             <span className="hidden sm:inline">View</span>
           </Link>
-          <QrCodeGenerator product={product}/>
+          <QrCodeGenerator product={product} />
         </div>
       </div>
     </div>

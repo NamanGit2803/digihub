@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { LayoutDashboard, Package, ShoppingCart, Users, Settings, LogOut, Menu } from "lucide-react"
+import { LayoutDashboard, Package, ShoppingCart, Users, Settings, LogOut, Menu, ChartBarStacked } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { useRouter } from "next/navigation"
@@ -19,7 +19,9 @@ const AdminSidebar = ({ open, onOpenChange }) => {
     { label: "Products", href: "/admin/products", icon: Package },
     { label: "Orders", href: "/admin/orders", icon: ShoppingCart },
     { label: "Users", href: "/admin/users", icon: Users },
+    { label: "Categories", href: "/admin/categories", icon: ChartBarStacked },
     { label: "Settings", href: "/admin/settings", icon: Settings },
+    
   ]
 
 

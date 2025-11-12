@@ -20,7 +20,6 @@ export async function POST(req) {
         folder: "products",
       })
       imageUrl = uploadResponse.secure_url
-      console.log("jij",imageUrl)
     }
 
     
@@ -47,7 +46,7 @@ export async function POST(req) {
   }
 }
 
-// ✅ GET ALL PRODUCTS
+//  GET ALL PRODUCTS
 export async function GET() {
   try {
     const products = await prisma.product.findMany({
@@ -60,14 +59,13 @@ export async function GET() {
   }
 }
 
-// ✅ UPDATE PRODUCT (PUT)
+// UPDATE PRODUCT (PUT)
 export async function PUT(req) {
   try {
     const body = await req.json()
    
     const { id, title, description, price, category, image, file_path, status } = body
 
-     console.log('body', id)
     if (!id) {
       return NextResponse.json({ error: "Product ID is required" }, { status: 400 })
     }
@@ -107,12 +105,11 @@ export async function PUT(req) {
   }
 }
 
-// ✅ DELETE PRODUCT
+//  DELETE PRODUCT
 export async function DELETE(req) {
   try {
     const { id } = await req.json(); 
 
-    console.log('id', id)
 
     if (!id) {
       return NextResponse.json({ error: "Product ID is required" }, { status: 400 });

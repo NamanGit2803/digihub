@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { Menu, X } from "lucide-react"
 import { observer } from "mobx-react-lite"
 import { useStore } from "../stores/StoreProvider"
@@ -12,10 +13,22 @@ const Navbar = () => {
   const { userStore } = useStore()
   const [isOpen, setIsOpen] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
+  const pathname = usePathname() // 👈 get current route path
 
   useEffect(() => {
     setIsMounted(true)
   }, [])
+
+  // Helper to check if a link is active
+  const isActive = (path) => pathname === path
+
+  // Styling for active vs inactive links
+  const linkClass = (path) =>
+    `transition font-medium ${
+      isActive(path)
+        ? "text-primary border-b-2 border-primary pb-1"
+        : "text-foreground hover:text-primary"
+    }`
 
   return (
     <nav className="sticky top-0 z-50 bg-background border-b border-border">
@@ -31,13 +44,13 @@ const Navbar = () => {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-8">
-            <Link href="/" className="text-foreground hover:text-primary transition">
+            <Link href="/" className={linkClass("/")}>
               Home
             </Link>
-            <Link href="/products" className="text-foreground hover:text-primary transition">
+            <Link href="/products" className={linkClass("/products")}>
               Products
             </Link>
-            <Link href="/about" className="text-foreground hover:text-primary transition">
+            <Link href="/about" className={linkClass("/about")}>
               About
             </Link>
           </div>
@@ -61,13 +74,13 @@ const Navbar = () => {
         {/* Mobile Menu */}
         {isOpen && (
           <div className="md:hidden pb-4 space-y-2">
-            <Link href="/" className="block px-4 py-2 hover:bg-secondary rounded-lg transition">
+            <Link href="/" className={`${linkClass("/")} block px-4 py-2 rounded-lg`}>
               Home
             </Link>
-            <Link href="/products" className="block px-4 py-2 hover:bg-secondary rounded-lg transition">
+            <Link href="/products" className={`${linkClass("/products")} block px-4 py-2 rounded-lg`}>
               Products
             </Link>
-            <Link href="/about" className="block px-4 py-2 hover:bg-secondary rounded-lg transition">
+            <Link href="/about" className={`${linkClass("/about")} block px-4 py-2 rounded-lg`}>
               About
             </Link>
           </div>

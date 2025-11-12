@@ -6,6 +6,9 @@ import { userStore } from "./UserStore"
 import { manageUsersStore } from "./admin/ManageUsersStore"
 import { productStore } from "./admin/ProductStore"
 import { publicProductsStore } from "./PublicProductsStore"
+import { categoryStore } from "./admin/CategoryStore"
+import { orderStore } from "./OrderStore"
+import { siteSettingStore } from "./admin/SiteSettingStore"
 
 // Combine stores in one object
 const store = {
@@ -13,6 +16,9 @@ const store = {
   manageUsersStore,
   productStore,
   publicProductsStore,
+  categoryStore,
+  orderStore,
+  siteSettingStore,
 }
 
 // Create React Context

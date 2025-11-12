@@ -7,8 +7,14 @@ import { OrdersTable } from "@/components/admin/orders-table"
 import { Users, ShoppingCart, TrendingUp, DollarSign } from "lucide-react"
 import { observer } from "mobx-react-lite"
 import { useStore } from '@/stores/StoreProvider'
+import { useEffect } from "react"
 
 const DashboardPage = () => {
+  const { manageUsersStore } = useStore()
+  useEffect(() => {
+    manageUsersStore.fetchAllUsers()
+  }, [])
+  
   return (
     <div className="space-y-6">
       <div>
@@ -18,7 +24,7 @@ const DashboardPage = () => {
 
       {/* Statistics Cards */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <StatCard title="Total Users" value="2,843" icon={Users} trend="+12.5%" description="from last month" />
+        <StatCard title="Total Users" value={manageUsersStore.allUsers?.length} icon={Users} trend="+12.5%" description="from last month" />
         <StatCard title="Total Orders" value="1,234" icon={ShoppingCart} trend="+8.2%" description="from last month" />
         <StatCard title="Revenue" value="$45,231" icon={DollarSign} trend="+23.1%" description="from last month" />
         <StatCard title="Growth" value="18.2%" icon={TrendingUp} trend="+4.3%" description="from last month" />

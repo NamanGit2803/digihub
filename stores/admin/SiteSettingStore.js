@@ -1,32 +1,26 @@
-'use client'
-
+"use client"
 import { makeAutoObservable, runInAction } from "mobx"
-import { toJS } from "mobx"
 
-class PublicProductsStore {
-    products = []
+class SiteSettingStore {
+    siteData = {}
     loading = false
     error = null
-    categories = []
-
 
     constructor() {
         makeAutoObservable(this)
-        this.fetchProducts()
-        this.fetchCategories()
     }
 
-    //  Fetch all products
-    async fetchProducts() {
+    // fetch site details 
+    async fetchData() {
         this.loading = true
         this.error = null
         try {
-            const res = await fetch("/api/products/fetchProducts")
-            if (!res.ok) throw new Error("Failed to fetch products")
+            const res = await fetch("/api/public/fetchSiteData")
+            if (!res.ok) throw new Error("Failed to fetch data")
 
             const data = await res.json()
             runInAction(() => {
-                this.products = data
+                this.siteData = data
                 this.loading = false
             })
         } catch (err) {
@@ -37,28 +31,32 @@ class PublicProductsStore {
         }
     }
 
-
-    //  Fetch all categories 
-    async fetchCategories() {
+    // update site data 
+    async updateSiteData(updatedData) {
         this.loading = true
         this.error = null
         try {
-            const res = await fetch("/api/products/fetchCategories")
-            if (!res.ok) throw new Error("Failed to fetch categories")
-
+            const res = await fetch(`/api/admin/siteSetting`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(updatedData),
+            })
+            if (!res.ok) throw new Error("Failed to update site-data")
             const data = await res.json()
+
             runInAction(() => {
-                this.categories = data
+                this.siteData = data
                 this.loading = false
             })
         } catch (err) {
+            console.log("err", err)
             runInAction(() => {
                 this.error = err.message
                 this.loading = false
             })
         }
     }
+
 }
 
-
-export const publicProductsStore = new PublicProductsStore()
+export const siteSettingStore = new SiteSettingStore()

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import {
     Dialog,
     DialogContent,
@@ -28,7 +28,7 @@ import { Trash2, CheckCircle, Plus } from "lucide-react"
 
 
 const AddProductDialog = () => {
-    const { productStore } = useStore()
+    const { productStore, categoryStore } = useStore()
     const [formData, setFormData] = useState({
         title: "",
         description: "",
@@ -39,8 +39,12 @@ const AddProductDialog = () => {
         status: "active",
     })
     const [dialogOpen, setdialogOpen] = useState(false)
-
     const [preview, setPreview] = useState("")
+
+    useEffect(() => {
+        categoryStore.fetchCategories()
+    }, [])
+
 
     const handleFileChange = (e) => {
         const file = e.target.files[0]
@@ -63,6 +67,7 @@ const AddProductDialog = () => {
             reader.onerror = (error) => reject(error)
         })
 
+    // handle submit 
     const handleSubmit = async () => {
         const { title, description, price, category, image, file_path } = formData
         if (title == '' || description == '' || price == '' || category == '' || file_path == '' || image == null) {
@@ -72,14 +77,12 @@ const AddProductDialog = () => {
 
         //  Convert file to base64
         const base64Image = await toBase64(image)
-
         const productData = {
             ...formData,
             image: base64Image, // send as base64 string
         }
 
-
-
+        // fetch api 
         await productStore.addProduct(productData)
 
         if (!productStore.error) {
@@ -104,8 +107,6 @@ const AddProductDialog = () => {
         } else {
             toast.error(productStore.error)
         }
-
-
     }
 
     return (
@@ -172,11 +173,9 @@ const AddProductDialog = () => {
                                 <SelectValue placeholder="Select category" />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="Notes">Notes</SelectItem>
-                                <SelectItem value="E-Books">E-Books</SelectItem>
-                                <SelectItem value="Icons">Icons & Illustrations</SelectItem>
-                                <SelectItem value="Courses">Courses</SelectItem>
-                                <SelectItem value="Templates">Templates</SelectItem>
+                                {categoryStore.categories?.map(cat => ( 
+                                    <SelectItem key={cat.id} value={cat.name}>{cat.name}</SelectItem>
+                                ))}
                             </SelectContent>
                         </Select>
                     </div>

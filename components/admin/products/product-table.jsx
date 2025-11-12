@@ -5,7 +5,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Edit2, Trash2, Eye } from "lucide-react"
-import DeleteConfirmDialog from "./deleteConfirmDialog"
+import DeleteConfirmDialog from "../deleteConfirmDialog"
 import ProductDetails from "./productDetails"
 import { observer } from "mobx-react-lite"
 import { useStore } from '@/stores/StoreProvider'
@@ -79,7 +79,7 @@ const ProductTable = ({ searchTerm = "" }) => {
                   <Button onClick={()=>{handleProductDialog(product, 'edit')}} variant="ghost" size="sm">
                     <Edit2 className="w-4 h-4" />
                   </Button>
-                  <DeleteConfirmDialog productId={product.id}/>
+                  <DeleteConfirmDialog details={product.id} type={'Product'}/>
                 </div>
               </TableCell>
             </TableRow>
