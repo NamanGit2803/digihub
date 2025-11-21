@@ -5,8 +5,7 @@ import { Button } from "@/components/ui/button"
 export default function ProfileNav({ activeTab, setActiveTab }) {
   const tabs = [
     { id: "info", label: "Account Info" },
-    { id: "purchased", label: "My Purchased" },
-    { id: "downloads", label: "Download History" },
+    { id: "downloads", label: "Downloads" },
   ]
 
   return (

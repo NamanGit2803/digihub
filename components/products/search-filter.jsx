@@ -13,10 +13,10 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { observer } from "mobx-react-lite"
-import { useStore } from '../stores/StoreProvider'
+import { useStore } from '../../stores/StoreProvider'
 import { toJS } from "mobx"
 
-const SearchFilter = ({ onFilter }) => {
+const SearchFilter = ({ onFilter, defaultCategory }) => {
 
   const { publicProductsStore } = useStore()
   const [search, setSearch] = useState("")
@@ -33,13 +33,24 @@ const SearchFilter = ({ onFilter }) => {
       })
     }, 300) // small debounce for smoother UX
 
+    console.log('cat',category)
+
     return () => clearTimeout(delayDebounce)
   }, [search, category, priceRange])
+
+
+  //  Sync dropdown if URL category changes
+  useEffect(() => {
+    if (defaultCategory) {
+      setCategory(publicProductsStore.categories.find(cat=>defaultCategory == cat.slug).name)
+    }
+  }, [defaultCategory])
+
 
   return (
     <div className="bg-card border border-border rounded-lg p-6 mb-8">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        {/* 🔍 Search Input */}
+        {/*  Search Input */}
         <div className="md:col-span-2">
           <label className="block text-sm font-medium mb-2">Search Products</label>
           <div className="relative">
@@ -54,7 +65,7 @@ const SearchFilter = ({ onFilter }) => {
           </div>
         </div>
 
-        {/* 🏷️ Category Dropdown */}
+        {/*  Category Dropdown */}
         <div>
           <label className="block text-sm font-medium mb-2">Category</label>
           <Select value={category} onValueChange={setCategory}>
@@ -72,7 +83,7 @@ const SearchFilter = ({ onFilter }) => {
           </Select>
         </div>
 
-        {/* 💰 Price Range Dropdown */}
+        {/*  Price Range Dropdown */}
         <div>
           <label className="block text-sm font-medium mb-2">Price Range</label>
           <Select value={priceRange} onValueChange={setPriceRange}>

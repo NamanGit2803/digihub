@@ -2,7 +2,7 @@
 
 import React from "react"
 import { observer } from "mobx-react-lite"
-import { useStore } from "../stores/StoreProvider"
+import { useStore } from "../../stores/StoreProvider"
 import Link from "next/link"
 import Image from "next/image"
 
@@ -26,7 +26,7 @@ const CategorySection = () => {
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
                     {publicProductsStore.categories?.map((category) => (
                         <Link
-                            href={`/category/${category.slug}`}
+                            href={`/products?category=${category.slug}`}
                             key={category.id}
                             className="group relative block overflow-hidden rounded-2xl shadow-sm hover:shadow-md transition-all hover:-translate-y-1"
                         >

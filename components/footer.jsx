@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import Link from 'next/link'
 
@@ -39,18 +41,13 @@ const Footer = () => {
                         <h3 className="font-bold mb-4">Support</h3>
                         <ul className="space-y-2 text-sm text-muted-foreground">
                             <li>
-                                <a href="#" className="hover:text-primary transition">
-                                    Help Center
+                                <a href="/about" className="hover:text-primary transition">
+                                    About Us
                                 </a>
                             </li>
                             <li>
-                                <a href="#" className="hover:text-primary transition">
+                                <a href="/contact" className="hover:text-primary transition">
                                     Contact Us
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" className="hover:text-primary transition">
-                                    FAQ
                                 </a>
                             </li>
                         </ul>

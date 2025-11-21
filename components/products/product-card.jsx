@@ -2,9 +2,9 @@
 
 import Link from "next/link"
 import { ShoppingCart, Eye } from "lucide-react"
-import QrCodeGenerator from "./QrCodeGenerator"
+import QrCodeGenerator from "../QrCodeGenerator"
 import { observer } from "mobx-react-lite"
-import { useStore } from '../stores/StoreProvider'
+import { useStore } from '../../stores/StoreProvider'
 
 const ProductCard = ({ product }) => {
 
@@ -40,7 +40,7 @@ const ProductCard = ({ product }) => {
         {/* Actions */}
         <div className="grid grid-cols-2 gap-2 ">
           <Link
-            href={`/products/${product.id}`}
+            href={`/product/${product.id}`}
             className="flex-1 flex items-center justify-center gap-2 bg-secondary text-secondary-foreground px-4 py-2 rounded-lg hover:bg-secondary/80 transition"
           >
             <Eye className="w-4 h-4" />

@@ -3,10 +3,9 @@
 import React from 'react'
 import { useState } from 'react'
 import { observer } from "mobx-react-lite"
-import { useStore } from '../../stores/StoreProvider'
+import { useStore } from '@/stores/StoreProvider'
 import ProfileHeader from '../../components/user/profile/profile-header'
 import ProfileNav from '../../components/user/profile/profile-nav'
-import OrdersSection from '../../components/user/profile/orders-section'
 import DownloadsSection from '../../components/user/profile/downloads-section'
 import dynamic from "next/dynamic"
 
@@ -26,7 +25,6 @@ const UserProfile = () => {
                 <ProfileNav activeTab={activeTab} setActiveTab={setActiveTab} />
 
                 {activeTab === "info" && <ProfileInfo />}
-                {activeTab === "purchased" && <OrdersSection />}
                 {activeTab === "downloads" && <DownloadsSection />}
             </main>
         </div>

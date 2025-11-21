@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Search } from "lucide-react"
-import { OrderManagementTable } from "@/components/admin/orders/order-management-table"
+import OrderManagementTable from "@/components/admin/orders/order-management-table"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 export default function OrdersPage() {
@@ -44,11 +44,8 @@ export default function OrdersPage() {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Orders</SelectItem>
-                <SelectItem value="pending">Pending</SelectItem>
-                <SelectItem value="processing">Processing</SelectItem>
-                <SelectItem value="shipped">Shipped</SelectItem>
-                <SelectItem value="delivered">Delivered</SelectItem>
-                <SelectItem value="cancelled">Cancelled</SelectItem>
+                <SelectItem value="WAITING_FOR_ADMIN_APPROVAL">Waiting for Approval</SelectItem>
+                <SelectItem value="APPROVED">Allowed</SelectItem>
               </SelectContent>
             </Select>
           </div>

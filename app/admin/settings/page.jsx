@@ -1,7 +1,7 @@
 "use client"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { GeneralSettings } from "@/components/admin/settings/general-settings"
+import  GeneralSettings  from "@/components/admin/settings/general-settings"
 import SiteSettings from "@/components/admin/settings/site-settings"
 import { observer } from "mobx-react-lite"
 import { useStore } from '@/stores/StoreProvider'

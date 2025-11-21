@@ -9,6 +9,7 @@ import { publicProductsStore } from "./PublicProductsStore"
 import { categoryStore } from "./admin/CategoryStore"
 import { orderStore } from "./OrderStore"
 import { siteSettingStore } from "./admin/SiteSettingStore"
+import { adminOrderStore } from "./admin/AdminOrderStore"
 
 // Combine stores in one object
 const store = {
@@ -19,6 +20,7 @@ const store = {
   categoryStore,
   orderStore,
   siteSettingStore,
+  adminOrderStore,
 }
 
 // Create React Context

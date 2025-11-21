@@ -1,3 +1,5 @@
+'use cient'
+
 import { Card, CardContent } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 

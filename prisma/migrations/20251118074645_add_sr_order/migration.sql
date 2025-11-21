@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE `order` ADD COLUMN `download_allow` VARCHAR(191) NOT NULL DEFAULT 'false',
+    MODIFY `status` VARCHAR(191) NOT NULL DEFAULT 'PAYMENT_SUCCESS';

@@ -38,19 +38,26 @@ model Product {
   file_path   String?
   status      String   @default("active")
   created_at  DateTime @default(now())
+
+  orders         Order[]
 }
 
 
 
 
 model Order {
+  sr_no       Int        @id @default(autoincrement())
   id          String     @unique 
   user_id     String
   amount       String
   product_id  String
   payment_id  String?   // Razorpay / UPI / custom payment reference
-  status      String    @default("pending")
+  download_allow Boolean   @default(false)
+  status      String    @default("WAITING_FOR_ADMIN_APPROVAL")
   created_at  DateTime  @default(now())
+
+  product       Product  @relation(fields: [product_id], references: [id])
+
 }
 
 
@@ -80,6 +87,9 @@ model SiteSetting {
   heroTitle       String
   heroSubtitle    String
   metaDescription String
+  business_address  String  
+  contact_number   String?
+  contact_email   String?
   updatedAt       DateTime @updatedAt
 }
 
