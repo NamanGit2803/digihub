@@ -64,14 +64,14 @@ model Order {
 
 
 model Download {
-  id             String   @unique
+  id             String  @id @unique
   user_id        Int
   product_id     Int
   download_time  DateTime @default(now())
 }
 
 model Category {
-  id           String   @unique
+  id           String  @id @unique
   name         String
   slug         String
   image        String
