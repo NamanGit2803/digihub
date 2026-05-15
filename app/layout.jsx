@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { StoreProvider } from "../stores/StoreProvider"
 import { Toaster } from "@/components/ui/sonner"
-import ClientLayoutWrapper from "@/components/ClientLayoutWrapper" // 👈 new wrapper
+import ClientLayoutWrapper from "@/components/ClientLayoutWrapper" 
 
 const geist = Geist({ subsets: ["latin"] })
 const geistMono = Geist_Mono({ subsets: ["latin"] })

@@ -24,7 +24,7 @@ const Hero = () => {
                 <div className="text-center">
                     <h1 className="text-4xl md:text-5xl font-bold mb-4 text-balance">{siteSettingStore.siteData?.heroTitle}</h1>
                     <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto text-balance">
-                       {siteSettingStore.siteData.heroSubtitle}
+                       {siteSettingStore.siteData?.heroSubtitle}
                     </p>
                     <Button className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-3 rounded-lg hover:bg-primary/90 transition font-medium">
                         Start Exploring

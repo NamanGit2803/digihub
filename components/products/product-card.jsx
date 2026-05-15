@@ -5,10 +5,31 @@ import { ShoppingCart, Eye } from "lucide-react"
 import QrCodeGenerator from "../QrCodeGenerator"
 import { observer } from "mobx-react-lite"
 import { useStore } from '../../stores/StoreProvider'
+import { toJS } from "mobx"
+import { useState, useEffect } from "react"
+import { Button } from "@/components/ui/button"
 
 const ProductCard = ({ product }) => {
 
-  const { userStore } = useStore()
+  const { userStore, orderStore } = useStore()
+  const [purchased, setPurchased] = useState(false)
+
+  useEffect(() => {
+
+    if (userStore.user && orderStore.orders.length > 0) {
+      const owns = orderStore.orders.some(order =>
+        order.product_id === product.id &&
+        order.download_allow &&
+        order.status === "APPROVED"
+      );
+      if (owns) {
+        setPurchased(true)
+      } else {
+        setPurchased(false)
+      }
+    }
+  }, [userStore.user, orderStore.orders, product.id])
+
 
   return (
     <div className="bg-card rounded-lg overflow-hidden border border-border hover:shadow-lg transition-shadow">
@@ -46,7 +67,13 @@ const ProductCard = ({ product }) => {
             <Eye className="w-4 h-4" />
             <span className="hidden sm:inline">View</span>
           </Link>
-          <QrCodeGenerator product={product} />
+          {purchased ? <Button
+            className="hover:cursor-pointer"
+            onClick={() => startDownload(download.id)}
+          >
+            Download
+          </Button>
+            : <QrCodeGenerator product={product} />}
         </div>
       </div>
     </div>

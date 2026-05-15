@@ -51,13 +51,13 @@ const QrCodePayment = ({ product }) => {
     }
 
     useEffect(() => {
-      if(success){
-        setTimeout(() => {
-            setOpen(false)
-        }, 5000);
-      }
+        if (success) {
+            setTimeout(() => {
+                setOpen(false)
+            }, 5000);
+        }
     }, [success])
-    
+
 
     // useEffect(() => {
     //     if (!open) orderStore.reset()
@@ -91,7 +91,7 @@ const QrCodePayment = ({ product }) => {
                             loop
                             muted
                             playsInline
-                            className="w-24 h-24"/>}
+                            className="w-24 h-24" />}
                     <p className="text-sm text-muted-foreground text-center">
                         {!success ? `Scan this QR to pay ₹${product.price}` : 'Payment Successfull'}
                     </p>
@@ -110,7 +110,7 @@ const QrCodePayment = ({ product }) => {
 
                     {orderStore.success && (
                         <p className="text-green-600 font-medium text-center">
-                            Payment verified ✅ — your order has been created!
+                            Payment verified — your order has been created!
                         </p>
                     )}
                 </DialogContent>

@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import SearchFilter from '@/components/products/search-filter'
 import ProductCard from "@/components/products/product-card"
 import { observer } from "mobx-react-lite"
@@ -13,11 +13,17 @@ import ProductSkeleton from '@/components/products/Product-skeleton'
 
 const ProductsPage = () => {
 
-    const { publicProductsStore } = useStore()
+    const { publicProductsStore, orderStore, userStore } = useStore()
     const [filteredProducts, setFilteredProducts] = useState([])
     const products = toJS(publicProductsStore.products) || []
     const searchParams = useSearchParams();
     const selectedCategory = searchParams.get("category");
+
+    useEffect(() => {
+        if (userStore.user) {
+            orderStore.fetchAllOrdersForUser(userStore.user?.email)
+        }
+    }, [])
 
     // filter 
     const handleFilter = ({ search, category, priceRange }) => {
