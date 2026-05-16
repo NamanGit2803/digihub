@@ -1,10 +1,12 @@
+export const dynamic = "force-dynamic"
+
 import { NextResponse } from "next/server"
-import { PrismaClient } from "@prisma/client"
+import { prisma } from "@/lib/prisma"
 import cloudinary from "@/lib/cloudinary"
 import { nanoid } from "nanoid"
 import slugify from "slugify"
 
-const prisma = new PrismaClient()
+
 
 //  CREATE CATEGORY (POST)
 export async function POST(req) {
