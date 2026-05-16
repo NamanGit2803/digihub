@@ -1,8 +1,9 @@
+export const dynamic = "force-dynamic"
+
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma"
 import cloudinary from "@/lib/cloudinary";
 
-const prisma = new PrismaClient();
 
 export async function PUT(req) {
     try {

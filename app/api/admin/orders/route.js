@@ -1,8 +1,9 @@
+export const dynamic = "force-dynamic"
+
 import { NextResponse } from "next/server"
-import { PrismaClient } from "@prisma/client"
+import { prisma } from "@/lib/prisma"
 import { nanoid } from "nanoid"
 
-const prisma = new PrismaClient()
 
 
 // GET ALL ORDERS
